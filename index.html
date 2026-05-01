@@ -5,6 +5,64 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ayşegül & Metin – 24. Yıldönümü</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCIqBGc_lcC1m_9PSJD-h0Yctu-ws4oWc4",
+    authDomain: "anniv-aysegul-metin.firebaseapp.com",
+    projectId: "anniv-aysegul-metin",
+    storageBucket: "anniv-aysegul-metin.firebasestorage.app",
+    messagingSenderId: "1071315359561",
+    appId: "1:1071315359561:web:544ca6e71b13b32d176c98",
+    measurementId: "G-54XEZD89PY"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Save photo URL to Firestore
+  window.savePhotoToFirestore = async function(albumIdx, url) {
+    const ref = doc(db, 'albums', 'album_' + albumIdx);
+    try {
+      await setDoc(ref, { photos: arrayUnion(url) }, { merge: true });
+    } catch(e) {
+      console.error('Firestore save error:', e);
+    }
+  };
+
+  // Load photos from Firestore
+  window.loadPhotosFromFirestore = async function(albumIdx) {
+    const ref = doc(db, 'albums', 'album_' + albumIdx);
+    try {
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        return snap.data().photos || [];
+      }
+    } catch(e) {
+      console.error('Firestore load error:', e);
+    }
+    return [];
+  };
+
+  // Delete photo from Firestore
+  window.deletePhotoFromFirestore = async function(albumIdx, url) {
+    const ref = doc(db, 'albums', 'album_' + albumIdx);
+    try {
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        const photos = (snap.data().photos || []).filter(p => p !== url);
+        await setDoc(ref, { photos }, { merge: false });
+      }
+    } catch(e) {
+      console.error('Firestore delete error:', e);
+    }
+  };
+
+  window.firestoreReady = true;
+  console.log('Firebase ready');
+</script>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
@@ -367,23 +425,28 @@
     try { localStorage.setItem('album_' + i, JSON.stringify(photos[i])); } catch(e) {}
   }
 
-  function openAlbum(i) {
+  async function openAlbum(i) {
     currentAlbum = i;
     const a = ALBUMS[i];
     document.getElementById('modal-icon').textContent  = a.icon;
     document.getElementById('modal-title').textContent = a.title;
     document.getElementById('modal-sub').textContent   = a.sub;
-    // Load from localStorage
-    try {
-      const stored = localStorage.getItem('album_' + i);
-      if (stored && photos[i].length === 0) {
-        photos[i] = JSON.parse(stored);
-        updateCount(i);
-      }
-    } catch(e) {}
-    renderPhotos();
     document.getElementById('modal-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
+
+    // Load from Firestore
+    document.getElementById('empty-msg').textContent = 'Fotoğraflar yükleniyor...';
+    try {
+      if (window.loadPhotosFromFirestore) {
+        const firestorePhotos = await window.loadPhotosFromFirestore(i);
+        if (firestorePhotos.length > 0) {
+          photos[i] = firestorePhotos;
+          updateCount(i);
+        }
+      }
+    } catch(e) {}
+    document.getElementById('empty-msg').textContent = 'Henüz fotoğraf eklenmedi. Yukarıdan ekleyebilirsin.';
+    renderPhotos();
   }
 
   function closeAlbum() {
@@ -429,6 +492,10 @@
         photos[currentAlbum].push(url);
         updateCount(currentAlbum);
         renderPhotos();
+        // Save to Firestore for sharing
+        if (window.savePhotoToFirestore) {
+          await window.savePhotoToFirestore(currentAlbum, url);
+        }
       } catch(err) {
         console.error('Upload error:', err);
         alert('Fotoğraf yüklenemedi: ' + err.message + '\nCloud: ' + CLOUD_NAME + ' Preset: ' + UPLOAD_PRESET);
@@ -484,10 +551,14 @@
     });
   }
 
-  function deletePhoto(idx) {
+  async function deletePhoto(idx) {
+    const url = photos[currentAlbum][idx];
     photos[currentAlbum].splice(idx, 1);
     updateCount(currentAlbum);
     renderPhotos();
+    if (window.deletePhotoFromFirestore) {
+      await window.deletePhotoFromFirestore(currentAlbum, url);
+    }
   }
 
   // Load photos for album from Cloudinary
