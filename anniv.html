@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayşegül & Metin – 24. Yıldönümü</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --rose: #b5405a; --rose-light: #f5dde3; --rose-pale: #fdf0f3;
+    --gold: #c49a44; --cream: #faf7f2; --deep: #2c1a22;
+    --muted: #7a5c67; --text: #3d2530;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Cormorant Garamond', serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+  /* HERO */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 4rem 2rem;
+    background: linear-gradient(170deg, #060d1f 0%, #0a1628 35%, #0d1f3c 65%, #0f2347 100%);
+    overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 80%, rgba(196,154,68,0.1) 0%, transparent 55%); }
+  .hero::after { display:none; }
+  .stars { position:absolute; inset:0; pointer-events:none; }
+  .star { position:absolute; border-radius:50%; background:#fff; animation:twinkle ease-in-out infinite; }
+  @keyframes twinkle { 0%,100%{opacity:0.15;transform:scale(1)} 50%{opacity:1;transform:scale(1.5)} }
+  .shooting { position:absolute; width:1px; height:1px; background:#fff; border-radius:50%; animation:shoot linear infinite; }
+  .shooting::after { content:''; position:absolute; top:0; right:0; width:90px; height:1px; background:linear-gradient(to left,transparent,rgba(255,255,255,.7)); }
+  @keyframes shoot { 0%{transform:translate(0,0) rotate(-30deg);opacity:1} 70%{opacity:.5} 100%{transform:translate(80vw,45vw) rotate(-30deg);opacity:0} }
+  .moon { position:absolute; top:7%; right:9%; width:52px; height:52px; border-radius:50%; background:transparent; box-shadow:-9px 3px 0 3px rgba(240,210,130,.85); opacity:.6; animation:moonGlow 5s ease-in-out infinite; display:block; }
+  @keyframes moonGlow { 0%,100%{opacity:.5;filter:blur(0px)} 50%{opacity:.75;filter:blur(.5px)} }
+  .petal { display:none; }
+
+  .hero-inner { position:relative; z-index:2; max-width:700px; }
+  .crown { font-size:2.8rem; margin-bottom:1.2rem; display:block; animation:float 3s ease-in-out infinite; filter:drop-shadow(0 0 12px rgba(196,154,68,.7)); }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .subtitle-top { font-size:.9rem; letter-spacing:.35em; text-transform:uppercase; color:rgba(245,218,180,.7); margin-bottom:1.4rem; animation:fadeUp 1s .2s both; }
+  .names { font-family:'Playfair Display',serif; font-size:clamp(2.6rem,6vw,4.5rem); font-weight:400; color:#fff; line-height:1.15; animation:fadeUp 1s .5s both; text-shadow:0 2px 24px rgba(0,0,0,.4); }
+  .names .amp { font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--gold); font-size:1.1em; font-weight:300; letter-spacing:0.05em; }
+  .divider-ornament { display:flex; align-items:center; justify-content:center; gap:1rem; margin:1.8rem 0; animation:fadeUp 1s .8s both; }
+  .divider-ornament .line { flex:1; height:1px; background:rgba(196,154,68,.5); max-width:100px; }
+  .divider-ornament .diamond { width:10px; height:10px; background:var(--gold); transform:rotate(45deg); box-shadow:0 0 8px rgba(196,154,68,.6); }
+  .year-badge { font-family:'Playfair Display',serif; font-size:clamp(4rem,12vw,8rem); font-weight:700; color:transparent; -webkit-text-stroke:1.5px rgba(196,154,68,.6); line-height:1; animation:fadeUp 1s 1s both; }
+  .year-label { font-size:1.05rem; letter-spacing:.2em; color:rgba(245,218,180,.85); margin-top:.4rem; animation:fadeUp 1s 1.2s both; }
+  .hero-date { margin-top:.6rem; font-size:.82rem; letter-spacing:.15em; color:rgba(255,255,255,.38); animation:fadeUp 1s 1.4s both; }
+  .scroll-hint { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; animation:fadeIn 2s 2.5s both; cursor:pointer; color:rgba(255,255,255,.4); font-size:.78rem; letter-spacing:.15em; }
+  .scroll-arrow { width:20px; height:20px; border-right:1.5px solid rgba(255,255,255,.35); border-bottom:1.5px solid rgba(255,255,255,.35); transform:rotate(45deg); animation:bounce 1.5s infinite; }
+  @keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(6px)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  /* COUNTDOWN */
+  .countdown-section { background:linear-gradient(135deg,#060d1f 0%,#0a1628 50%,#0d1f3c 100%); padding:5rem 2rem; text-align:center; position:relative; overflow:hidden; }
+  .countdown-section::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 100%,rgba(100,160,255,.1) 0%,transparent 55%); }
+  .countdown-inner { position:relative; z-index:1; max-width:860px; margin:0 auto; }
+  .mode-label { font-size:.78rem; letter-spacing:.4em; text-transform:uppercase; color:var(--gold); margin-bottom:.7rem; }
+  .countdown-title { font-family:'Playfair Display',serif; font-size:clamp(1.3rem,3vw,1.9rem); font-style:italic; color:rgba(255,255,255,.85); margin-bottom:2.8rem; font-weight:400; }
+  .boxes { display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; margin-bottom:1.8rem; }
+  @media(max-width:580px){ .boxes{grid-template-columns:repeat(2,1fr)} }
+  .box { background:rgba(255,255,255,.04); border:.5px solid rgba(196,154,68,.28); border-radius:16px; padding:1.8rem 1rem; }
+  .box-num { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,5vw,3.8rem); font-weight:700; color:var(--gold); display:block; line-height:1; }
+  .box-lbl { font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.38); display:block; margin-top:.5rem; }
+  .anniversary-date-sub { font-size:.82rem; letter-spacing:.18em; color:rgba(255,255,255,.28); }
+
+  /* MESSAGE */
+  .section-wrap { padding:5rem 2rem; max-width:860px; margin:0 auto; }
+  .section-label { font-size:.78rem; letter-spacing:.4em; text-transform:uppercase; color:var(--gold); margin-bottom:.8rem; }
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.6rem); font-weight:400; color:var(--deep); line-height:1.2; margin-bottom:2rem; }
+  .message-card { background:var(--rose-pale); border:.5px solid rgba(181,64,90,.14); border-radius:20px; padding:3.5rem 3rem; position:relative; text-align:center; }
+  .message-card::before { content:'\201C'; position:absolute; top:-1.5rem; left:50%; transform:translateX(-50%); font-family:'Playfair Display',serif; font-size:7rem; color:var(--rose-light); line-height:1; pointer-events:none; }
+  .message-text { font-size:clamp(1.1rem,2.5vw,1.35rem); line-height:2; color:var(--text); font-style:italic; position:relative; z-index:1; }
+  .message-sig { margin-top:2rem; font-size:.9rem; letter-spacing:.12em; color:var(--muted); font-style:normal; }
+
+  /* GALLERY CARDS */
+  .gallery { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
+  @media(max-width:520px){ .gallery{grid-template-columns:repeat(2,1fr)} }
+  .gallery-item {
+    aspect-ratio:1; background:var(--rose-light); border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column; gap:.5rem; padding:1.2rem; text-align:center;
+    border:.5px solid rgba(181,64,90,.15);
+    transition:transform .3s ease, box-shadow .3s ease;
+    cursor:pointer; position:relative; overflow:hidden;
+  }
+  .gallery-item:hover { transform:translateY(-5px) scale(1.02); box-shadow:0 10px 32px rgba(181,64,90,.18); }
+  .gallery-item .open-hint { position:absolute; bottom:9px; right:11px; font-size:.6rem; letter-spacing:.1em; color:var(--rose); opacity:.55; text-transform:uppercase; }
+  .gallery-icon { font-size:2.2rem; }
+  .gallery-year { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; color:var(--rose); }
+  .gallery-desc { font-size:.78rem; color:var(--muted); font-style:italic; }
+  .gallery-count { font-size:.7rem; color:var(--rose); margin-top:.2rem; opacity:.7; }
+
+  /* MODAL OVERLAY */
+  .modal-overlay {
+    display:none; position:fixed; inset:0; z-index:1000;
+    background:rgba(44,26,34,.88); align-items:center; justify-content:center; padding:1.5rem;
+  }
+  .modal-overlay.open { display:flex; animation:fadeIn .25s ease; }
+  .modal {
+    background:var(--cream); border-radius:20px;
+    width:100%; max-width:700px; max-height:90vh; overflow-y:auto;
+    padding:2.5rem 2rem 2rem; position:relative;
+    animation:slideUp .3s ease;
+  }
+  @keyframes slideUp { from{transform:translateY(30px);opacity:0} to{transform:translateY(0);opacity:1} }
+  .modal-close { position:absolute; top:1rem; right:1.3rem; background:none; border:none; cursor:pointer; font-size:1.7rem; color:var(--muted); line-height:1; }
+  .modal-close:hover { color:var(--rose); }
+  .modal-header { text-align:center; margin-bottom:1.8rem; }
+  .modal-icon { font-size:2.4rem; display:block; margin-bottom:.4rem; }
+  .modal-title { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:400; color:var(--deep); }
+  .modal-sub { font-size:.82rem; color:var(--muted); margin-top:.3rem; font-style:italic; }
+
+  /* UPLOAD ZONE */
+  .upload-zone { border:1.5px dashed rgba(181,64,90,.35); border-radius:14px; padding:1.8rem 1.5rem; text-align:center; cursor:pointer; transition:background .2s, border-color .2s; margin-bottom:1.5rem; }
+  .upload-zone:hover { background:var(--rose-pale); border-color:var(--rose); }
+  .upload-zone input { display:none; }
+  .upload-zone .uz-icon { font-size:1.8rem; display:block; margin-bottom:.4rem; }
+  .upload-zone p { font-size:.85rem; color:var(--muted); line-height:1.6; }
+  .upload-zone strong { color:var(--rose); }
+
+  /* PHOTO GRID IN MODAL */
+  .photo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; }
+  @media(max-width:480px){ .photo-grid{grid-template-columns:repeat(2,1fr)} }
+  .photo-thumb { aspect-ratio:1; border-radius:10px; overflow:hidden; position:relative; cursor:pointer; border:.5px solid rgba(181,64,90,.12); }
+  .photo-thumb img { width:100%; height:100%; object-fit:cover; transition:transform .3s ease; display:block; }
+  .photo-thumb:hover img { transform:scale(1.07); }
+  .del-btn { position:absolute; top:5px; right:5px; background:rgba(44,26,34,.75); color:#fff; border:none; border-radius:50%; width:22px; height:22px; font-size:.65rem; cursor:pointer; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .2s; }
+  .photo-thumb:hover .del-btn { opacity:1; }
+  .empty-album { text-align:center; padding:1rem 0 .5rem; font-size:.88rem; color:var(--muted); font-style:italic; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,.93); align-items:center; justify-content:center; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:88vh; border-radius:6px; object-fit:contain; }
+  .lb-close { position:absolute; top:1.3rem; right:1.8rem; background:none; border:none; color:#fff; font-size:2.2rem; cursor:pointer; opacity:.7; }
+  .lb-close:hover { opacity:1; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.12); border:none; color:#fff; font-size:2rem; cursor:pointer; padding:.5rem 1rem; border-radius:8px; transition:background .2s; }
+  .lb-nav:hover { background:rgba(255,255,255,.25); }
+  .lb-prev { left:1.2rem; }
+  .lb-next { right:1.2rem; }
+  .lb-counter { position:absolute; bottom:1.5rem; left:50%; transform:translateX(-50%); color:rgba(255,255,255,.5); font-size:.82rem; letter-spacing:.1em; }
+
+  /* FOOTER */
+  footer { background:linear-gradient(170deg,#060d1f 0%,#0a1628 60%,#0d1f3c 100%); text-align:center; padding:4.5rem 2rem; }
+  .heart { font-size:1.8rem; display:block; margin-bottom:1rem; animation:heartbeat 1.5s ease-in-out infinite; filter:drop-shadow(0 0 8px rgba(181,64,90,.8)); }
+  @keyframes heartbeat { 0%,100%{transform:scale(1)} 14%{transform:scale(1.22)} 28%{transform:scale(1)} 42%{transform:scale(1.15)} 56%{transform:scale(1)} }
+  .footer-names { font-family:'Playfair Display',serif; font-size:1.4rem; color:rgba(245,218,180,.7); font-style:italic; margin-bottom:.5rem; }
+  .footer-date { color:rgba(255,255,255,.28); font-size:.8rem; letter-spacing:.2em; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="stars"></div>
+  <div class="moon"></div>
+  <div class="stars" id="stars-container"></div>
+  <div class="hero-inner">
+    <span class="crown">🤍</span>
+    <p class="subtitle-top">Mutlu 24. Yıldönümünüz</p>
+    <h1 class="names">Ayşegül<br><span class="amp">&</span><br>Metin</h1>
+    <div class="divider-ornament"><div class="line"></div><div class="diamond"></div><div class="line"></div></div>
+    <div class="year-badge">24</div>
+    <p class="year-label">Yıllık Aşk Hikayesi</p>
+    <p class="hero-date">6 Haziran 2002 — 6 Haziran 2026</p>
+  </div>
+  <div class="scroll-hint" onclick="document.getElementById('sayac').scrollIntoView({behavior:'smooth'})">
+    <span>aşağı kaydır</span><div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<div class="countdown-section" id="sayac">
+  <div class="countdown-inner">
+    <p class="mode-label" id="mode-label">Geri Sayım</p>
+    <h2 class="countdown-title" id="countdown-title">O özel güne kadar...</h2>
+    <div class="boxes">
+      <div class="box"><span class="box-num" id="b-gun">–</span><span class="box-lbl">Gün</span></div>
+      <div class="box"><span class="box-num" id="b-saat">–</span><span class="box-lbl">Saat</span></div>
+      <div class="box"><span class="box-num" id="b-dakika">–</span><span class="box-lbl">Dakika</span></div>
+      <div class="box"><span class="box-num" id="b-saniye">–</span><span class="box-lbl">Saniye</span></div>
+    </div>
+    <p class="anniversary-date-sub">6 Haziran 2026 · 24. Yıldönümü</p>
+  </div>
+</div>
+
+<!-- MESSAGE -->
+<div class="section-wrap">
+  <p class="section-label">Sevgi dolu bir mesaj</p>
+  <h2 class="section-title" style="font-style:italic">Canım Annem ve Babam,</h2>
+  <div class="message-card">
+    <p class="message-text">
+      Canlarım, evlilik yıldönümünüz kutlu olsun.
+    </p>
+    <p class="message-text">
+      Daha nice seneleriniz olsun.
+    </p>
+    <p class="message-text">
+      Size küçük bir sanal albüm bırakıyorum. İstediğiniz kadar fotoğraf yükleyebilirsiniz.
+    </p>
+    <p class="message-text">
+      Sizi çok seviyorum. Mutlu yıldönümleri 🤍🤍🤍
+    </p>
+    <p class="message-sig">— Sevgiyle, Selin 🤍</p>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="section-wrap">
+  <p class="section-label">Anılar &amp; Kilometre taşları</p>
+  <h2 class="section-title">24 Yılın İzleri</h2>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openAlbum(0)">
+      <span class="gallery-icon">💍</span>
+      <span class="gallery-year">6 Haziran 2002</span>
+      <span class="gallery-desc">Her şeyin başlangıcı</span>
+      <span class="gallery-count" id="count-0"></span>
+      <span class="open-hint">albümü aç</span>
+    </div>
+    <div class="gallery-item" onclick="openAlbum(1)">
+      <span class="gallery-icon">🏡</span>
+      <span class="gallery-year">Ev</span>
+      <span class="gallery-desc">Bir ev, bir aile</span>
+      <span class="gallery-count" id="count-1"></span>
+      <span class="open-hint">albümü aç</span>
+    </div>
+    <div class="gallery-item" onclick="openAlbum(2)">
+      <span class="gallery-icon">👶</span>
+      <span class="gallery-year">Aile</span>
+      <span class="gallery-desc">Family time</span>
+      <span class="gallery-count" id="count-2"></span>
+      <span class="open-hint">albümü aç</span>
+    </div>
+    <div class="gallery-item" onclick="openAlbum(3)">
+      <span class="gallery-icon">🏝️🍉⛱️🌞🌊</span>
+      <span class="gallery-year">Tatillerimiz</span>
+      
+      <span class="gallery-count" id="count-3"></span>
+      <span class="open-hint">albümü aç</span>
+    </div>
+    <div class="gallery-item" onclick="openAlbum(4)">
+      <span class="gallery-icon">👨🏻‍🍳👩🏻‍🍳</span>
+      <span class="gallery-year">Birlikte Yenen Yemekler</span>
+      <span class="gallery-desc">En güzel sohbetler sofrada başlar</span>
+      <span class="gallery-count" id="count-4"></span>
+      <span class="open-hint">albümü aç</span>
+    </div>
+    <div class="gallery-item" onclick="openAlbum(5)">
+      <span class="gallery-icon">🌟</span>
+      <span class="gallery-year">6 Haziran 2026</span>
+      <span class="gallery-desc">24. yıl kutlaması</span>
+      <span class="gallery-count" id="count-5"></span>
+      <span class="open-hint">albümü aç</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="heart">❤️</span>
+  <p class="footer-names">Ayşegül &amp; Metin SEZER</p>
+  <p class="footer-date">6 Haziran 2002 – 6 Haziran 2026 · 24 Yıl</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAlbum()">✕</button>
+    <div class="modal-header">
+      <span class="modal-icon" id="modal-icon"></span>
+      <h3 class="modal-title" id="modal-title"></h3>
+      <p class="modal-sub" id="modal-sub"></p>
+    </div>
+
+    <label class="upload-zone" id="upload-zone">
+      <input type="file" id="file-input" accept="image/*" multiple onchange="handleFiles(event)">
+      <span class="uz-icon">📷</span>
+      <p><strong>Fotoğraf ekle</strong><br>tıkla veya sürükle-bırak</p>
+    </label>
+
+    <div class="photo-grid" id="photo-grid"></div>
+    <p class="empty-album" id="empty-msg">Henüz fotoğraf eklenmedi. Yukarıdan ekleyebilirsin.</p>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation(); navLightbox(-1)">&#8249;</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lb-nav lb-next" onclick="event.stopPropagation(); navLightbox(1)">&#8250;</button>
+  <span class="lb-counter" id="lb-counter"></span>
+</div>
+
+<script>
+  /* ---- Stars ---- */
+  (function(){
+    const container = document.getElementById('stars-container');
+    if(!container) return;
+    const count = 130;
+    for(let i=0;i<count;i++){
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random()*2.5+0.5;
+      s.style.cssText = `
+        width:${size}px; height:${size}px;
+        top:${Math.random()*100}%;
+        left:${Math.random()*100}%;
+        animation-duration:${2+Math.random()*4}s;
+        animation-delay:${Math.random()*5}s;
+      `;
+      container.appendChild(s);
+    }
+    // Shooting stars
+    for(let i=0;i<3;i++){
+      const s = document.createElement('div');
+      s.className = 'shooting';
+      s.style.cssText = `
+        top:${5+Math.random()*30}%;
+        left:${Math.random()*20}%;
+        animation-duration:${7+Math.random()*6}s;
+        animation-delay:${i*4+Math.random()*3}s;
+      `;
+      container.appendChild(s);
+    }
+  })();
+
+  /* ---- Countdown ---- */
+  const HEDEF = new Date('2026-06-06T00:00:00');
+  function guncelle() {
+    const fark = HEDEF - new Date();
+    if (fark <= 0) {
+      document.getElementById('mode-label').textContent = 'Bugün o özel gün!';
+      document.getElementById('countdown-title').textContent = '🌹 Mutlu 24. Yıldönümünüz! 🌹';
+      ['b-gun','b-saat','b-dakika','b-saniye'].forEach(id => document.getElementById(id).textContent = '0');
+      return;
+    }
+    const s = Math.floor(fark/1000);
+    document.getElementById('b-gun').textContent     = Math.floor(s/86400);
+    document.getElementById('b-saat').textContent    = String(Math.floor(s/3600)%24).padStart(2,'0');
+    document.getElementById('b-dakika').textContent  = String(Math.floor(s/60)%60).padStart(2,'0');
+    document.getElementById('b-saniye').textContent  = String(s%60).padStart(2,'0');
+  }
+  guncelle(); setInterval(guncelle, 1000);
+
+  /* ---- Albums ---- */
+  const ALBUMS = [
+    { icon:'💍', title:'6 Haziran 2002', sub:'Her şeyin başlangıcı' },
+    { icon:'🏡', title:'Ev',           sub:'Bir ev, bir aile' },
+    { icon:'👶', title:'Aile',           sub:'Family time' },
+    { icon:'🌸', title:'Tatillerimiz',  sub:'' },
+    { icon:'☕', title:'Birlikte Yenen Yemekler', sub:'En güzel sohbetler sofrada başlar' },
+    { icon:'🌟', title:'6 Haziran 2026', sub:'24. yıl kutlaması' },
+  ];
+
+  // photos[i] = array of dataURLs
+  const photos = ALBUMS.map(() => []);
+  let currentAlbum = 0;
+  let lbIndex = 0;
+
+  function updateCount(i) {
+    const el = document.getElementById('count-' + i);
+    el.textContent = photos[i].length ? photos[i].length + ' fotoğraf' : '';
+    try { localStorage.setItem('album_' + i, JSON.stringify(photos[i])); } catch(e) {}
+  }
+
+  function openAlbum(i) {
+    currentAlbum = i;
+    const a = ALBUMS[i];
+    document.getElementById('modal-icon').textContent  = a.icon;
+    document.getElementById('modal-title').textContent = a.title;
+    document.getElementById('modal-sub').textContent   = a.sub;
+    // Load from localStorage
+    try {
+      const stored = localStorage.getItem('album_' + i);
+      if (stored && photos[i].length === 0) {
+        photos[i] = JSON.parse(stored);
+        updateCount(i);
+      }
+    } catch(e) {}
+    renderPhotos();
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAlbum() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeAlbum();
+  }
+
+  const CLOUD_NAME   = 'ddsaswccx';
+  const UPLOAD_PRESET = 'anniversary';
+
+  async function uploadToCloudinary(file) {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', UPLOAD_PRESET);
+    fd.append('folder', 'album_' + currentAlbum);
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+      method: 'POST', body: fd
+    });
+    if (!res.ok) {
+      const err = await res.text();
+      console.error('Cloudinary error:', res.status, err);
+      throw new Error('Upload failed: ' + res.status);
+    }
+    const data = await res.json();
+    if (!data.secure_url) {
+      console.error('No secure_url in response:', data);
+      throw new Error('No URL returned');
+    }
+    return data.secure_url;
+  }
+
+  async function handleFiles(e) {
+    const files = Array.from(e.target.files);
+    e.target.value = '';
+    for (const file of files) {
+      showUploading(true);
+      try {
+        const url = await uploadToCloudinary(file);
+        photos[currentAlbum].push(url);
+        updateCount(currentAlbum);
+        renderPhotos();
+      } catch(err) {
+        console.error('Upload error:', err);
+        alert('Fotoğraf yüklenemedi: ' + err.message + '\nCloud: ' + CLOUD_NAME + ' Preset: ' + UPLOAD_PRESET);
+      }
+    }
+    showUploading(false);
+  }
+
+  function showUploading(active) {
+    const zone = document.getElementById('upload-zone');
+    zone.querySelector('strong').textContent = active ? 'Yükleniyor...' : 'Fotoğraf ekle';
+    zone.style.opacity = active ? '0.6' : '1';
+    zone.style.pointerEvents = active ? 'none' : '';
+  }
+
+  // Drag & drop support
+  document.addEventListener('DOMContentLoaded', () => {
+    const zone = document.getElementById('upload-zone');
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.background = 'var(--rose-pale)'; });
+    zone.addEventListener('dragleave', () => { zone.style.background = ''; });
+    zone.addEventListener('drop', async e => {
+      e.preventDefault(); zone.style.background = '';
+      const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+      for (const file of files) {
+        showUploading(true);
+        try {
+          const url = await uploadToCloudinary(file);
+          photos[currentAlbum].push(url);
+          updateCount(currentAlbum);
+          renderPhotos();
+        } catch(err) {
+          alert('Fotoğraf yüklenemedi.');
+        }
+      }
+      showUploading(false);
+    });
+
+    // Load existing photos from Cloudinary on open
+  });
+
+  function renderPhotos() {
+    const grid = document.getElementById('photo-grid');
+    const empty = document.getElementById('empty-msg');
+    const arr = photos[currentAlbum];
+    empty.style.display = arr.length ? 'none' : 'block';
+    grid.innerHTML = '';
+    arr.forEach((src, idx) => {
+      const thumb = document.createElement('div');
+      thumb.className = 'photo-thumb';
+      thumb.innerHTML = `<img src="${src}" alt="Fotoğraf ${idx+1}" onclick="openLightbox(${idx})">
+        <button class="del-btn" onclick="event.stopPropagation(); deletePhoto(${idx})" title="Sil">✕</button>`;
+      grid.appendChild(thumb);
+    });
+  }
+
+  function deletePhoto(idx) {
+    photos[currentAlbum].splice(idx, 1);
+    updateCount(currentAlbum);
+    renderPhotos();
+  }
+
+  // Load photos for album from Cloudinary
+  async function loadAlbumPhotos(albumIdx) {
+    if (photos[albumIdx].length > 0) return; // already loaded
+    try {
+      // We store URLs in localStorage as cache
+      const stored = localStorage.getItem('album_' + albumIdx);
+      if (stored) {
+        photos[albumIdx] = JSON.parse(stored);
+        updateCount(albumIdx);
+      }
+    } catch(e) {}
+  }
+
+
+
+  /* ---- Lightbox ---- */
+  function openLightbox(idx) {
+    lbIndex = idx;
+    showLbPhoto();
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+  function navLightbox(dir) {
+    const arr = photos[currentAlbum];
+    lbIndex = (lbIndex + dir + arr.length) % arr.length;
+    showLbPhoto();
+  }
+  function showLbPhoto() {
+    const arr = photos[currentAlbum];
+    document.getElementById('lb-img').src = arr[lbIndex];
+    document.getElementById('lb-counter').textContent = (lbIndex+1) + ' / ' + arr.length;
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('lightbox').classList.contains('open')) {
+      if (e.key === 'ArrowRight') navLightbox(1);
+      if (e.key === 'ArrowLeft')  navLightbox(-1);
+      if (e.key === 'Escape')     closeLightbox();
+    } else if (document.getElementById('modal-overlay').classList.contains('open')) {
+      if (e.key === 'Escape') closeAlbum();
+    }
+  });
+</script>
+</body>
+</html>
